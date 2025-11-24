@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from typing import List, Optional
 
 
@@ -7,8 +7,7 @@ class VoiceprintRegisterRequest(BaseModel):
 
     speaker_id: str
 
-    class Config:
-        schema_extra = {"example": {"speaker_id": "user_001"}}
+    model_config = ConfigDict(json_schema_extra={"example": {"speaker_id": "user_001"}})
 
 
 class VoiceprintRegisterResponse(BaseModel):
@@ -17,8 +16,7 @@ class VoiceprintRegisterResponse(BaseModel):
     success: bool
     msg: str
 
-    class Config:
-        schema_extra = {"example": {"success": True, "msg": "已登记: user_001"}}
+    model_config = ConfigDict(json_schema_extra={"example": {"success": True, "msg": "已登记: user_001"}})
 
 
 class VoiceprintIdentifyRequest(BaseModel):
@@ -26,8 +24,7 @@ class VoiceprintIdentifyRequest(BaseModel):
 
     speaker_ids: str  # 逗号分隔的候选说话人ID
 
-    class Config:
-        schema_extra = {"example": {"speaker_ids": "user_001,user_002,user_003"}}
+    model_config = ConfigDict(json_schema_extra={"example": {"speaker_ids": "user_001,user_002,user_003"}})
 
 
 class VoiceprintIdentifyResponse(BaseModel):
@@ -36,5 +33,4 @@ class VoiceprintIdentifyResponse(BaseModel):
     speaker_id: str
     score: float
 
-    class Config:
-        schema_extra = {"example": {"speaker_id": "user_001", "score": 0.85}}
+    model_config = ConfigDict(json_schema_extra={"example": {"speaker_id": "user_001", "score": 0.85}})
