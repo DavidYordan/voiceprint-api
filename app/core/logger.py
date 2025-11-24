@@ -99,10 +99,10 @@ def setup_logging(level: Optional[str] = None) -> None:
     """
     # 获取配置
     log_level = level or settings.logging.get("level", "INFO")
-
-    # 确保日志目录存在
+    file_enabled = bool(settings.logging.get("file_enabled", True))
     log_dir = "logs"
-    os.makedirs(log_dir, exist_ok=True)
+    if file_enabled:
+        os.makedirs(log_dir, exist_ok=True)
 
     # 控制台输出格式 - 分段颜色显示
     console_format = (
@@ -129,19 +129,19 @@ def setup_logging(level: Optional[str] = None) -> None:
         enqueue=True,
     )
 
-    # 添加文件处理器
-    logger.add(
-        os.path.join(log_dir, "voiceprint_api.log"),
-        format=file_format,
-        level=log_level,
-        rotation="10 MB",
-        retention="7 days",
-        compression="gz",
-        encoding="utf-8",
-        backtrace=True,
-        diagnose=True,
-        enqueue=True,
-    )
+    if file_enabled:
+        logger.add(
+            os.path.join(log_dir, "voiceprint_api.log"),
+            format=file_format,
+            level=log_level,
+            rotation="10 MB",
+            retention="7 days",
+            compression="gz",
+            encoding="utf-8",
+            backtrace=True,
+            diagnose=True,
+            enqueue=True,
+        )
 
     # 拦截所有logging日志
     # 1. 移除root logger的所有handler

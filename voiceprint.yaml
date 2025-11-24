@@ -17,3 +17,7 @@ mysql:
   password: "123456"
   # 数据库名
   database: "voiceprint_db"
+
+logging:
+  # 日志文件是否开启
+  file_enabled: false
